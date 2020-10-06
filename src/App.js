@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import Home from './compontents/Home';
+import About from './compontents/About';
+import Contact from './compontents/Contact';
+import Navbar from './compontents/MyNavbar';
+import Footer from './compontents/Footer';
+import Category from './compontents/Category'
+import Dummy from './compontents/Dummy';
+import Post from './compontents/Post';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <Router>
+                <Navbar />
+                <Switch>
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/:cat/:slug' component={Dummy} />
+                    <Route exact path='/about' component={About} />
+                    <Route exact path='/contact' component={Contact} />
+                    <Route exact path='/apfncywldhfp' component={Post} />
+                    <Route exact path='/:cat' component={Category} />
+                </Switch>
+                <Footer />
+            </Router>
+        </>
+    );
 }
 
 export default App;
