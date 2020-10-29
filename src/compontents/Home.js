@@ -4,22 +4,6 @@ import axios from 'axios';
 
 function Home() {
 
-    const [events, setEvents] = useState([]);
-
-    useEffect(() => {
-        document.title = 'Home Page';
-
-        axios.get('https://app.omihdlive24.com/posts')
-        .then((response) => {
-            setEvents(response.data);
-            //console.log(response);
-        })
-        .catch((error) => {
-            // handle error
-            console.log(error);
-        });
-    }, []);
-
     /*const events = [
         {
             title: 'Soccer',
@@ -36,7 +20,7 @@ function Home() {
     ]*/
     return (
         <>
-            <Events events={events} />
+            <Events filterby={'home'} />
         </>
     )
 }

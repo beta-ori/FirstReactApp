@@ -17,11 +17,11 @@ function App() {
                 <Navbar />
                 <Switch>
                     <Route exact path='/' component={Home} />
+                    <Route exact path='/:cat' component={Category} />
                     <Route exact path='/:cat/:slug' component={Dummy} />
                     <Route exact path='/about' component={About} />
                     <Route exact path='/contact' component={Contact} />
                     <Route exact path='/apfncywldhfp' component={Post} />
-                    <Route exact path='/:cat' component={Category} />
                 </Switch>
                 <Footer />
             </Router>

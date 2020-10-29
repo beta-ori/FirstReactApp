@@ -3,24 +3,6 @@ import Events from './Events';
 import axios from 'axios'
 
 function Category(props) {
-    
-    console.log(props.match.params.cat);
-
-    const [events, setEvents] = useState([]);
-
-    useEffect(() => {
-        document.title = 'Home Page';
-
-        axios.get('https://app.omihdlive24.com/category/' + props.match.params.cat)
-        .then((response) => {
-            setEvents(response.data);
-            //console.log(response);
-        })
-        .catch((error) => {
-            // handle error
-            console.log(error);
-        })
-    }, [props.match.params.cat]);
 
     // const events = [
     //     {
@@ -34,7 +16,7 @@ function Category(props) {
 
     return (
         <>
-            <Events events={events} />
+            <Events filterby={props.match.params.cat} category={'category'} />
         </>
     )
 }

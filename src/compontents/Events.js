@@ -1,25 +1,55 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Row, Col, Card, CardBody, CardText, Button} from 'reactstrap';
+import {Container, Row, Col, Card, CardBody} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import Event from './Event';
 import axios from 'axios';
 
-function Dummy(props) {
+function Events(props) {
 
-    const [topEvents, setEvents] = useState([]);
+    const [topEvents, setTopEvents] = useState([]);
+    
+    const [events, setEvents] = useState([]);
+
+    console.log(props.filterby)
 
     useEffect(() => {
-        document.title = 'Home Page';
+
+        document.title = 'Omi Live';
+
         axios.get('https://app.omihdlive24.com/posts')
         .then((response) => {
-            setEvents(response.data);
+            setTopEvents(response.data);
+
+            if(props.filterby  == 'home')
+            {   
+                setEvents(response.data);
+            }
+            
+            else if(props.category == 'category')
+            {
+                const data = response.data.filter( item => {
+                    return item.category == props.filterby;
+                })
+               
+                setEvents(data);
+            }
+            else{
+                const data = response.data.filter( item => {
+                    return item.cust_url == props.filterby;
+                })
+
+                document.title = data[0].title;
+               
+                setEvents(data);
+            }
+
             //console.log(response);
         })
         .catch((error) => {
             // handle error
             console.log(error);
         })
-    }, []);
+    }, [props.filterby]);
 
     const categories = ['Sports', 'Soccer', 'Football', 'NHL', 'NFL', 'Tennis', 'UFC', 'Events'];
     
@@ -30,7 +60,7 @@ function Dummy(props) {
                 <Row>
                     <Col md='8'>
                        {
-                            props.events.map((event, key) => {
+                            events.map((event, key) => {
                                 return <Event key={key} event={event} />
                             })
                        }
@@ -60,5 +90,4 @@ function Dummy(props) {
     )
 }
 
-
-export default Dummy;
+export default Events;
