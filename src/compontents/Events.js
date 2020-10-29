@@ -1,36 +1,71 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Row, Col, Card, CardBody, CardText, Button} from 'reactstrap';
+import {Container, Row, Col, Card, CardBody, Spinner} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import Event from './Event';
 import axios from 'axios';
 
-function Dummy(props) {
+function Events(props) {
 
-    const [topEvents, setEvents] = useState([]);
+    const [topEvents, setTopEvents] = useState([]);
+    
+    const [events, setEvents] = useState([]);
+
+    console.log(props.filterby)
 
     useEffect(() => {
-        document.title = 'Home Page';
+
+        document.title = 'Omi Live';
+
         axios.get('https://app.omihdlive24.com/posts')
         .then((response) => {
-            setEvents(response.data);
+            setTopEvents(response.data);
+
+            if(props.filterby  == 'home')
+            {   
+                setEvents(response.data);
+            }
+            
+            else if(props.category == 'category')
+            {
+                const data = response.data.filter( item => {
+                    return item.category == props.filterby;
+                })
+               
+                setEvents(data);
+            }
+            else{
+                const data = response.data.filter( item => {
+                    return item.cust_url == props.filterby;
+                })
+
+                document.title = data[0].title;
+               
+                setEvents(data);
+            }
+
             //console.log(response);
         })
         .catch((error) => {
             // handle error
             console.log(error);
         })
-    }, []);
+    }, [props.filterby]);
 
     const categories = ['Sports', 'Soccer', 'Football', 'NHL', 'NFL', 'Tennis', 'UFC', 'Events'];
     
 
     return (
         <>
-            <Container style={{marginTop: '80px', marginBottom: '40px'}}>
+            <Container style={{marginTop: '80px', marginBottom: '40px', minHeight: '100vh'}}>
                 <Row>
                     <Col md='8'>
                        {
-                            props.events.map((event, key) => {
+                           events == []? 
+                           <div style={styles.spinnerRoot}>
+                               <Spinner type="border" style={styles.spinner} color="info"/>
+                           </div>
+                           :
+                            events.map((event, key) => {
                                 return <Event key={key} event={event} />
                             })
                        }
@@ -60,5 +95,20 @@ function Dummy(props) {
     )
 }
 
+const styles = {
 
-export default Dummy;
+    spinnerRoot: {
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    spinner: {
+        width: 50,
+        height: 50,
+        margin: 10
+    }
+}
+
+export default Events;

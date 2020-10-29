@@ -1,25 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Events from './Events';
 import axios from 'axios';
 
 function Dummy(props) {
-
-
-    const [events, setEvents] = useState([]);
-
-    useEffect(() => {
-        document.title = 'Home Page';
-
-        axios.get('https://app.omihdlive24.com/post/' + props.match.params.slug)
-        .then((response) => {
-            setEvents(response.data);
-            //console.log(response.data);
-        })
-        .catch((error) => {
-            // handle error 
-            console.log(error);
-        })
-    }, [props.match.params.slug])
 
 
     // const events = [
@@ -34,7 +17,7 @@ function Dummy(props) {
 
     return (
         <>
-            <Events events={events} />
+            <Events filterby={props.match.params.slug} />
         </>
     )
 }

@@ -1,24 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Events from './Events';
-import axios from 'axios';
+
 
 function Home() {
-
-    const [events, setEvents] = useState([]);
-
-    useEffect(() => {
-        document.title = 'Home Page';
-
-        axios.get('https://app.omihdlive24.com/posts')
-        .then((response) => {
-            setEvents(response.data);
-            //console.log(response);
-        })
-        .catch((error) => {
-            // handle error
-            console.log(error);
-        });
-    }, []);
 
     /*const events = [
         {
@@ -36,7 +20,7 @@ function Home() {
     ]*/
     return (
         <>
-            <Events events={events} />
+            <Events filterby={'home'} />
         </>
     )
 }

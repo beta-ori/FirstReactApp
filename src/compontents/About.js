@@ -1,25 +1,19 @@
 import React from 'react';
 import {Container} from 'reactstrap';
-import axios from 'axios';
 
-function About(props) {
+
+function About() {
     document.title = 'About Page';
 
-    console.log(props);
-
-    axios.get('http://localhost:4444/posts')
-    .then(function (response) {
-        // handle success
-        console.log(response);
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    });
+    const firstStyle = {
+        height: '100vh',
+        textAlign: 'center',
+        paddingTop: '100px'
+    };
 
     return (
         <>
-            <Container style={{marginTop: '80px'}}>
+            <Container style={firstStyle}>
                 <div>
                     <h1>About Page</h1>    
                 </div>
